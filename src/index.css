@@ -1,0 +1,256 @@
+@import 'tailwindcss';
+
+@import '@fontsource/rye/400.css';
+@import '@fontsource/alfa-slab-one/400.css';
+@import '@fontsource-variable/archivo';
+@import '@fontsource/pacifico/400.css';
+@import '@fontsource/monoton/400.css';
+
+/* Tailwind v4 has no JS config, so class-based dark mode must be declared here.
+   Without this, `dark:` follows the OS setting and the toggle does nothing. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* Brand palette — Southwestern, deliberately not literal Texas-flag colors.
+     The flag reds/blues appear exactly once, in the SRV easter egg. */
+  --color-bone: #f5f1e8;
+  --color-bone-dim: #e7e1d3;
+  --color-ink: #17150f;
+  --color-ink-soft: #2a2721;
+  --color-burnt: #c24a16;
+  --color-burnt-lit: #e2652c;
+  --color-turquoise: #2a9d8f;
+  --color-saddle: #a9762f;
+  --color-volt: #b8ff3c;
+
+  --font-display: 'Rye', ui-serif, Georgia, serif;
+  --font-slab: 'Alfa Slab One', ui-serif, Georgia, serif;
+  --font-sans: 'Archivo Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-script: 'Pacifico', cursive;
+  --font-retro: 'Monoton', cursive;
+
+  --ease-thud: cubic-bezier(0.2, 0.9, 0.25, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Nav is sticky; anchor jumps must clear it. */
+    scroll-padding-top: 5.5rem;
+  }
+
+  body {
+    background-color: var(--color-bone);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    /* Belt-and-braces against any child that overflows horizontally. */
+    overflow-x: hidden;
+  }
+
+  .dark body {
+    background-color: var(--color-ink);
+    color: var(--color-bone);
+  }
+
+  ::selection {
+    background-color: var(--color-burnt);
+    color: var(--color-bone);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-burnt);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+@utility text-balance {
+  text-wrap: balance;
+}
+
+/* Native horizontal scrolling stays available; the bar itself is just noise. */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ---- Fluid display type -------------------------------------------------- */
+
+@utility display-xl {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 8vw, 6.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+}
+
+@utility display-lg {
+  font-family: var(--font-slab);
+  font-size: clamp(2rem, 5.5vw, 4rem);
+  line-height: 1;
+}
+
+@utility display-md {
+  font-family: var(--font-slab);
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  line-height: 1.1;
+}
+
+@utility eyebrow {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+/* ---- Texture ------------------------------------------------------------- */
+
+/* Leather stitch — a dashed inset rule, used on cards and the job ticket. */
+@utility stitch {
+  border: 1px solid color-mix(in oklab, currentColor 25%, transparent);
+  box-shadow: inset 0 0 0 1px transparent;
+  position: relative;
+}
+
+@utility stitch-inner {
+  position: absolute;
+  inset: 6px;
+  border: 1px dashed color-mix(in oklab, currentColor 30%, transparent);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* Weathered paper grain for the bone sections. */
+@utility grain {
+  background-image:
+    radial-gradient(
+      circle at 20% 30%,
+      color-mix(in oklab, var(--color-saddle) 6%, transparent) 0%,
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 80% 70%,
+      color-mix(in oklab, var(--color-burnt) 5%, transparent) 0%,
+      transparent 40%
+    );
+}
+
+/* Wood grain for the dark roadhouse panels. */
+@utility woodgrain {
+  background-image: repeating-linear-gradient(
+      92deg,
+      rgba(255, 255, 255, 0.014) 0px,
+      rgba(255, 255, 255, 0.014) 1px,
+      transparent 1px,
+      transparent 4px
+    ),
+    repeating-linear-gradient(
+      88deg,
+      rgba(0, 0, 0, 0.16) 0px,
+      rgba(0, 0, 0, 0.16) 2px,
+      transparent 2px,
+      transparent 9px
+    );
+}
+
+/* Brick wall behind the hero neon — pure CSS, no image assets. */
+@utility brickwall {
+  background-color: #1a1512;
+  background-image: linear-gradient(
+      335deg,
+      rgba(0, 0, 0, 0.5) 0%,
+      transparent 60%
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.55) 0px,
+      rgba(0, 0, 0, 0.55) 2px,
+      transparent 2px,
+      transparent 34px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.45) 0px,
+      rgba(0, 0, 0, 0.45) 2px,
+      transparent 2px,
+      transparent 74px
+    ),
+    linear-gradient(180deg, #2a201b 0%, #17110e 100%);
+}
+
+/* ---- Neon ---------------------------------------------------------------- */
+
+/* Consumed by NeonSign; --neon is set inline from the active swatch. */
+@utility neon-lit {
+  color: #fff8f0;
+  text-shadow:
+    0 0 2px #fff,
+    0 0 8px var(--neon),
+    0 0 18px var(--neon),
+    0 0 38px var(--neon),
+    0 0 78px color-mix(in oklab, var(--neon) 70%, transparent);
+}
+
+@utility neon-dark {
+  color: #4a423c;
+  text-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.06),
+    0 -1px 0 rgba(0, 0, 0, 0.7);
+}
+
+@keyframes neon-flicker {
+  0% { opacity: 0; }
+  4% { opacity: 0.9; }
+  8% { opacity: 0.1; }
+  12% { opacity: 0.9; }
+  16% { opacity: 0.2; }
+  22% { opacity: 1; }
+  26% { opacity: 0.35; }
+  32% { opacity: 1; }
+  40% { opacity: 0.75; }
+  48% { opacity: 1; }
+  100% { opacity: 1; }
+}
+
+@keyframes neon-buzz {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.93; }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.04); }
+}
+
+@utility flicker-on {
+  animation: neon-flicker 1.1s var(--ease-thud) both;
+}
+
+@utility buzzing {
+  animation: neon-buzz 3.2s ease-in-out infinite;
+}
+
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes rope-dash {
+  to { stroke-dashoffset: -28; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flicker-on,
+  .buzzing {
+    animation: none !important;
+  }
+}

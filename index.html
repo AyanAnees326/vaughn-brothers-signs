@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%20%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2210%22%20fill%3D%22%2317150F%22%2F%3E%20%3Crect%20x%3D%224%22%20y%3D%224%22%20width%3D%2256%22%20height%3D%2256%22%20rx%3D%227%22%20fill%3D%22none%22%20stroke%3D%22%23C24A16%22%20stroke-width%3D%222.5%22%2F%3E%20%3Ctext%20x%3D%2216.5%22%20y%3D%2243%22%20font-family%3D%22Georgia%2C%20serif%22%20font-weight%3D%22bold%22%20font-size%3D%2230%22%20fill%3D%22%23F5F1E8%22%20text-anchor%3D%22middle%22%3EV%3C%2Ftext%3E%20%3Ctext%20x%3D%2247.5%22%20y%3D%2243%22%20font-family%3D%22Georgia%2C%20serif%22%20font-weight%3D%22bold%22%20font-size%3D%2230%22%20fill%3D%22%23F5F1E8%22%20text-anchor%3D%22middle%22%3EB%3C%2Ftext%3E%20%3Cpath%20d%3D%22M32%2022.5l1.9%203.9%204.3.6-3.1%203%20.7%204.3-3.8-2-3.8%202%20.7-4.3-3.1-3%204.3-.6z%22%20fill%3D%22%23C24A16%22%2F%3E%20%3C%2Fsvg%3E" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="The Vaughn Brothers Sign Co. — custom sign fabrication, permitting and installation in Houston, Texas since 1987."
+    />
+    <title>The Vaughn Brothers Sign Co. — Houston, TX</title>
+    <script>
+      // Applied before first paint so the page never flashes the wrong theme.
+      (function () {
+        try {
+          var stored = localStorage.getItem('vb-theme')
+          var dark =
+            stored === 'dark' ||
+            (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)
+          if (dark) document.documentElement.classList.add('dark')
+        } catch (e) {}
+      })()
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
